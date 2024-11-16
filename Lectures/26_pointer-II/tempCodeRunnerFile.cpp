@@ -1,0 +1,1 @@
+cout << sizeof(&ptr) << endl;
