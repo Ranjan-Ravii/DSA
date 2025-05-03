@@ -148,19 +148,35 @@ int inorderPredecessor(Node* root, int key, int &pred){
     return pred;
 }
 
-int inorderSuccessor(Node* root, int key){
-    int succ = -1;
+// int inorderSuccessor(Node* root, int key){
+//     int succ = -1;
 
-    while (root) {
-        if(root->data >  key){
-            succ = root->data;
-            root = root->left;
-        }
-        else{
-            root = root->right;
+//     while (root) {
+//         if(root->data >  key){
+//             succ = root->data;
+//             root = root->left;
+//         }
+//         else{
+//             root = root->right;
+//         }
+//     }
+//     return succ;
+// }
+
+void inorderSuccessor(Node* root, int key, Node* &succ){
+    if (!root){
+        return ;
+    }
+    
+    inorderSuccessor(root->left, key, succ);
+
+    if(root->data > key){
+        if(!succ || (succ && succ->data > root->data)){
+            succ = root;
         }
     }
-    return succ;
+    inorderSuccessor(root->right, key , succ);
+
 }
 
 
@@ -196,8 +212,9 @@ int main() {
 
  
     int keySucc = 11;
-    int successor = inorderSuccessor(root, keySucc);
-    cout << "inorder successor of " <<  keySucc << " : " << successor << endl ;
+    Node* succ = nullptr;
+    inorderSuccessor(root, keySucc, succ);
+    cout << "inorder successor of " <<  keySucc << " : " << succ->data << endl ;
 
     return 0;
 }
