@@ -1,0 +1,1 @@
+ if( left < size && arr[i] < arr[left]){
